@@ -13,6 +13,9 @@ None.
 This stored procedure does not accept any parameter or return any values.
 ==============================================================================================
 */
+DROP PROCEDURE silver.load_silver;
+USE master;
+USE DataWarehouse;
 CREATE OR ALTER PROCEDURE silver.load_silver AS
 BEGIN
 	BEGIN TRY
@@ -35,21 +38,21 @@ INSERT INTO silver.crm_cust_info(
 	cst_key,
 	cst_firstname,
 	cst_lastname,
-	cst_material_status,
+	cst_marital_status,
 	cst_gndr,
 	cst_create_date)
 SELECT 
 cst_id,cst_key,
 TRIM(cst_firstname) AS cst_firstname,
 TRIM(cst_lastname) AS cst_lastname,
-CASE WHEN UPPER(TRIM(cst_material_status)) = 'M' THEN 'Married'
-     WHEN UPPER(TRIM(cst_material_status)) ='S' THEN 'Single'
-	 ELSE 'n/a'
-END cst_material_status,
+CASE WHEN UPPER(TRIM(cst_marital_status)) = 'M' THEN 'Married'
+     WHEN UPPER(TRIM(cst_marital_status)) ='S' THEN 'Single'
+	 ELSE 'N/A'
+END cst_marital_status,
 
 CASE WHEN UPPER(TRIM(cst_gndr)) = 'M' THEN 'Male'
      WHEN UPPER(TRIM(cst_gndr)) ='F' THEN 'Female'
-	 ELSE 'n/a'
+	 ELSE 'N/A'
 END cst_gndr,
 
 cst_create_date
@@ -60,9 +63,6 @@ cst_create_date
 		FROM bronze.crm_cust_info
 		WHERE cst_id IS NOT NULL)t
 		WHERE flag_last =1 ;
-
-	
-		SELECT * FROM silver.crm_cust_info;
 SET @end_time = GETDATE();
 		PRINT '>>Load Duration' + CAST(DATEDIFF(second,@start_time,@end_time)AS NVARCHAR) + ' seconds ';
 		PRINT'--------------------------------------'
@@ -101,8 +101,6 @@ END AS prd_line,
 CAST(prd_start_dt AS DATE) AS prd_start_date,
 CAST(LEAD(prd_start_dt) OVER (PARTITION BY prd_key ORDER BY prd_start_dt)-1 AS DATE ) AS prd_end_dt
 FROM bronze.crm_prd_info;
-
-SELECT * FROM silver.crm_prd_info;
 
 SET @end_time = GETDATE();
 PRINT '>>Load Duration' + CAST(DATEDIFF(second,@start_time,@end_time)AS NVARCHAR) + ' seconds ';
