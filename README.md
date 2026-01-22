@@ -25,6 +25,8 @@ This project was implemented by learning from the **Data With Baraa** YouTube se
 ## 🏗️ Architecture Overview
 
 The project follows a **layered data architecture**:
+<img width="1099" height="563" alt="image" src="https://github.com/user-attachments/assets/e483c71b-17e0-4867-87d6-7bd9829a3c31" />
+
 
 ### 1️⃣ Bronze Layer (Raw Data)
 
