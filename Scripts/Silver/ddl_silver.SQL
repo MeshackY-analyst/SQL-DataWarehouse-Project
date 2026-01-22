@@ -9,13 +9,13 @@ Script Purpose :
 ==============================================================================================
 */
 IF OBJECT_ID('silver.crm_cust_info','U') IS NOT NULL 
-	DROP TABLE silver.crm_cust_info;
+	DROP Table silver.crm_cust_info;
 CREATE TABLE silver.crm_cust_info (
 cst_id INT ,
 cst_key VARCHAR(50),
 cst_firstname	 NVARCHAR(50),
 cst_lastname NVARCHAR(50),
-cst_material_status NVARCHAR(50),
+cst_marital_status NVARCHAR(50),
 cst_gndr NVARCHAR(50),
 cst_create_date DATE,
 dhw_create_date DATETIME2 DEFAULT GETDATE()                 
@@ -78,3 +78,4 @@ subcat NVARCHAR(50),
 maintenance NVARCHAR(50),
 dhw_create_date DATETIME2 DEFAULT GETDATE()
 );
+
